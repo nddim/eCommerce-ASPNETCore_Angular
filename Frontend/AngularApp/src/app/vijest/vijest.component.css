@@ -1,0 +1,15 @@
+.col-sm-4 {
+  padding-left: 15px; /* Dodajemo lijevu marginu */
+  padding-right: 15px; /* Dodajemo desnu marginu */
+}
+
+@media (min-width: 768px) {
+  .row.no-gutters {
+    margin-left: -15px; /* Uklanjamo vanjske margine za red */
+    margin-right: -15px; /* Uklanjamo vanjske margine za red */
+  }
+
+}
+.container {
+  min-height: calc(100vh - 250px); /* Adjust 56px to match the height of your navbar */
+}

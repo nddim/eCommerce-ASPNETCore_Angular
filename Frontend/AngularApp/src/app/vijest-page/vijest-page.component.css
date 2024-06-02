@@ -1,0 +1,3 @@
+.container {
+  min-height: calc(100vh - 120px); /* Adjust 56px to match the height of your navbar */
+}

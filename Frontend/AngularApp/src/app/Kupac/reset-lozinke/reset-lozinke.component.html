@@ -1,0 +1,58 @@
+<app-navbar></app-navbar>
+<div class="container col-md-6 mt-4">
+  <h3>Lične postavke:</h3>
+  <form [formGroup]="registerForm" (ngSubmit)="updateLozinku()">
+    <div class="form-outline mb-2">
+      <label class="form-label" for="staraLozinka">Stara lozinka</label>
+      <input formControlName="staraLozinka" (keyup.enter)="onEnter($event)" [ngClass]="{'is-invalid':submitted && registerForm.controls['staraLozinka'].errors}"
+             type="password" id="staraLozinka" class="form-control" />
+      <div *ngIf="submitted && registerForm.controls['staraLozinka'].errors" class="text-danger">
+        <div *ngIf="submitted && registerForm.controls['staraLozinka'].errors?.['required']" class="text-danger">
+          Lozinka je obavezna
+        </div>
+        <div *ngIf="submitted && registerForm.controls['staraLozinka'].errors?.['minlength']" class="text-danger">
+          Lozinka minimalno 3 karaktera
+        </div>
+        <div *ngIf="submitted && registerForm.controls['staraLozinka'].errors?.['maxlength']" class="text-danger">
+          Lozinka maximalno 50 karaktera
+        </div>
+      </div>
+    </div>
+    <div class="form-outline mb-2">
+      <label class="form-label" for="novaLozinka1">Nova lozinka</label>
+      <input formControlName="novaLozinka1" (keyup.enter)="onEnter($event)" [ngClass]="{'is-invalid':submitted && registerForm.controls['novaLozinka1'].errors}"
+             type="password" id="novaLozinka1" class="form-control" />
+      <div *ngIf="submitted && registerForm.controls['novaLozinka1'].errors" class="text-danger">
+        <div *ngIf="submitted && registerForm.controls['novaLozinka1'].errors?.['required']" class="text-danger">
+          Nova lozinka je obavezna
+        </div>
+        <div *ngIf="submitted && registerForm.controls['novaLozinka1'].errors?.['minlength']" class="text-danger">
+          Lozinka minimalno 3 karaktera
+        </div>
+        <div *ngIf="submitted && registerForm.controls['novaLozinka1'].errors?.['maxlength']" class="text-danger">
+          Lozinka maximalno 50 karaktera
+        </div>
+      </div>
+    </div>
+    <div class="form-outline mb-2">
+      <label class="form-label" for="novaLozinka2">Potvrdi novu lozinku</label>
+      <input formControlName="novaLozinka2" (keyup.enter)="onEnter($event)" [ngClass]="{'is-invalid':submitted && registerForm.controls['novaLozinka2'].errors}"
+             type="password" id="novaLozinka2" class="form-control" />
+      <div *ngIf="submitted && registerForm.controls['novaLozinka2'].errors" class="text-danger">
+        <div *ngIf="submitted && registerForm.controls['novaLozinka2'].errors?.['required']" class="text-danger">
+          Potvrdna lozinka je obavezna
+        </div>
+        <div *ngIf="submitted && registerForm.controls['novaLozinka2'].errors?.['minlength']" class="text-danger">
+          Lozinka minimalno 3 karaktera
+        </div>
+        <div *ngIf="submitted && registerForm.controls['novaLozinka2'].errors?.['maxlength']" class="text-danger">
+          Lozinka maximalno 50 karaktera
+        </div>
+      </div>
+    </div>
+
+
+   <button  (click)="updateLozinku()"  type="button" class="btn btn-primary btn-block mb-4" >Promijeni lozinku</button>
+  </form>
+</div>
+<app-footer></app-footer>

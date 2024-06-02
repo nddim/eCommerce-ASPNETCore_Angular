@@ -1,0 +1,129 @@
+<div class="container py-3">
+  <div class="row d-flex justify-content-center my-4">
+    <div class="row">
+      <div class="col-lg-10" style="text-align:left">
+        <table class="table ">
+          <thead>
+          <tr>
+            <th>Referenca narudzbe</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Email</th>
+            <th>Datum kreiranja</th>
+            <th>Datum potvrde</th>
+            <th>Datum isporuke</th>
+            <th>Ukupna cijena</th>
+            <th>Status narudzbe</th>
+            <th>Detalji</th>
+            <th>Akcije</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let n of narudzbe | paginate:{itemsPerPage: tableSize, currentPage: page,totalItems:count};let i=index">
+            <td>{{ n.narudzbaId }}</td>
+            <td>{{ n.ime}}</td>
+            <td>{{ n.prezime }}</td>
+            <td>{{ n.email}}</td>
+            <td>{{ n.datumKreiranja | date }}</td>
+            <td>{{ n.datumPotvrde | date }}</td>
+            <td>{{ n.datumIsporuke | date }}</td>
+            <td>{{ n.ukupnaCijena }}</td>
+            <td>{{ n.narudzbaStatus }}</td>
+            <td>Detalji</td>
+            <td>
+              <div >
+                <!--            <button (click)="modifikujProizvod(_proizvod)" class="btn btn-info" style="margin-right: 5px">Edit</button>-->
+                <button (click)="edit=true ;getKupacStatus(n.narudzbaId); getKupacNarudzba(n.narudzbaId);getStavke(n.narudzbaId)" class="btn btn-info" style="margin-right: 5px">Edit</button>
+                <button (click)="obrisiNarudzbu(n.narudzbaId)" class="btn btn-danger" >Obrisi</button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <nav aria-label="Page navigation example" class="d-flex mt-3 justify-content-center">
+          <ul class="pagination">
+            <pagination-controls
+              previousLabel="Prev"
+              nextLabel="Next"
+              (pageChange)="onTableDataChange($event)"
+            >
+            </pagination-controls>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="edit" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog" style="max-width: 800px;width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Ažuriraj narudžbu</h5>
+        <button  type="button" class="btn-close" (click)="edit=false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="mb-3 col-lg-3">
+            <label class="form-label">Referenca narudzbe</label>
+            <input disabled class="form-control" [(ngModel)]="narudzbaId" placeholder="Id"/>
+          </div>
+          <div class="mb-3 col-lg-3">
+            <label class="form-label">Kupac Id</label>
+            <input disabled class="form-control" [(ngModel)]="narudzbaKupacId" placeholder="Id"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-lg-3">
+            <label class="form-label">Ime</label>
+            <input disabled class="form-control" [(ngModel)]="narudzbaIme" placeholder="Ime" />
+          </div>
+          <div class="mb-3 col-lg-4">
+            <label class="form-label">Prezime</label>
+            <input disabled class="form-control" [(ngModel)]="narudzbaPrezime" placeholder="Prezime" />
+          </div>
+          <div class="mb-3 col-lg-5">
+            <label class="form-label">Email</label>
+            <input disabled class="form-control" [(ngModel)]="narudzbaEmail" placeholder="Email" />
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <table class="table ">
+            <thead>
+            <tr>
+              <th>Naziv proizvoda</th>
+              <th>Cijena</th>
+              <th>Kolicina</th>
+              <th>Ukupna cijena</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let n of stavkeNarudzbe ;let i=index">
+              <td>{{ n.naziv }}</td>
+              <td>{{ n.cijenaProizvod}}</td>
+              <td>{{ n.kolicina}}</td>
+              <td>{{ n.zbirnoCijena}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-lg-6">
+            <label class="form-label " style="margin-right: 1rem">Status narudžbe:</label>
+            <select [(ngModel)]="editStatus">
+              <option *ngFor="let s of statusNarudzbe"   [selected]="s.id==statusKupca" [value]="s.id">{{s.status}}</option>
+            </select>
+          </div>
+          <div class="col-lg-6" style="float:right;">
+            <a routerLink="/admin-panel/proizvodi" routerLinkActive="active" target="_blank">Otvori proizvode u novom tabu</a>
+          </div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  (click)="edit=false">Ugasi</button>
+        <button type="button" class="btn btn-primary" (click)="editNarudzba()" >Ažuriraj narudžbu</button>
+      </div>
+    </div>
+  </div>
+</div>
+

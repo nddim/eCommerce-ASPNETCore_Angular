@@ -1,0 +1,83 @@
+.icon-hover:hover {
+  border-color: #3b71ca !important;
+  background-color: white !important;
+}
+
+.icon-hover:hover i {
+  color: #3b71ca !important;
+}
+
+
+mat-slider {
+  width: 95%;
+}
+
+
+.overlapping-rows {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 400px; /* Ili postavite na odgovarajuću širinu */
+  background-color: white; /* Boja pozadine preklapajućih redova */
+  border: 1px solid #ccc; /* Opciono: dodajte ivicu */
+    padding-left: 10px; /* Opciono: dodajte razmak oko redova */
+    padding-right: 10px; /* Opciono: dodajte razmak oko redova */
+  opacity: 1; /* Prozirnost preklapajućih redova */
+  z-index: 1; /* Postavite z-index tako da prelazi preko sadržaja ispod */
+}
+
+.overlapping-rows .row {
+  margin-bottom: 0px; /* Opciono: dodajte razmak između redova */
+}
+
+.none{
+  display: none;
+}
+
+.block{
+  display: block;
+}
+
+img, h5:hover{
+  cursor:pointer;
+}
+
+.korpa{
+  text-decoration: none;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  color: black;
+  text-underline: none;
+}
+.korpa:hover{
+  cursor: pointer;
+  background-color: #4b4bff;
+}
+
+.naslov{
+    text-align: center;
+    /*vertical-align: middle;*/
+    /*height: 60px;*/
+  /*line-height: 60px;*/
+}
+
+.opis{
+    text-align: center;
+    max-height: 80px;
+    max-width: 100%;
+    overflow-y: auto; /* Omogućite vertikalni scrollbar */
+    padding: 5px; /* Dodajte odstupanje za bolji izgled */
+  margin-bottom: 7px;
+}
+
+.proizvod-pretraga{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px; /* Postavite visinu diva */
+}
+
+.hr-linija{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

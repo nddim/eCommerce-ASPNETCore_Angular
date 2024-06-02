@@ -1,0 +1,21 @@
+.container {
+  min-height: calc(100vh - 130px); /* Adjust 56px to match the height of your navbar */
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.form-outline {
+  flex: 1; /* Allow form fields to grow and occupy remaining vertical space */
+}
+
+button {
+  margin-top: auto; /* Push button to the bottom */
+}
+
+app-footer {
+  margin-top: auto; /* Push footer to the bottom */
+}

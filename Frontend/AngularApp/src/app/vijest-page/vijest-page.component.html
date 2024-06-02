@@ -1,0 +1,39 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<app-navbar></app-navbar>
+<div class="container py-3">
+  <div class="row d-flex justify-content-center my-4">
+    <div class="col-md-12" >
+      <h2  class="text-center">{{vijesti.naziv}}</h2>
+    </div>
+    <hr>
+    <div class="col-md-2">
+      <p class="text-center"><i class="bi bi-eye"></i> <span id="viewCounter"> {{vijesti.brojKlikova}} pregleda</span></p>
+      <p class="text-center"><i class="bi bi-calendar3"></i> {{vijesti.datum|date}}</p>
+     </div>
+    <div class="col-md-7">
+      <div class="col-md-12 text-center">
+        <img src="{{vijesti.slikaUrl}}"
+             style="margin: auto; max-width: 100%; max-height: 450px;"
+             class="rounded-2 fit" alt="Description of the image">
+        <hr>
+      </div>
+      <div class="col-md-12">
+        <p [innerHTML]="vijesti.tekst"></p>
+      </div>
+    </div>
+    <div class="col-md-3" >
+      <div class="text-center" >
+        <h4>Najnovije vijesti</h4>
+      </div>
+      <hr>
+      <article *ngFor="let v of vijestiLista">
+        <a href="#" [routerLink]="['/vijest', v.id]" style="text-decoration:none; "><h6>{{v.naziv}}</h6></a>
+        <div class="row">
+          <div class="col-md-6"> <i class="bi bi-calendar3"></i> {{getTimeElapsed(v.datum)}}</div>
+        </div>
+        <hr>
+      </article>
+    </div>
+  </div>
+</div>
+  <app-footer></app-footer>

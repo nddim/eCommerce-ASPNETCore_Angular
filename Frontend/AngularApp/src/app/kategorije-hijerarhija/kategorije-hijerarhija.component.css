@@ -1,0 +1,22 @@
+p{
+  padding: 7px;
+}
+p:hover {
+  cursor: pointer;
+  background-color:   #0D6EFD !important;
+}
+
+.col-sm-4 {
+  padding-left: 15px; /* Dodajemo lijevu marginu */
+  padding-right: 15px; /* Dodajemo desnu marginu */
+}
+h2{
+  padding-left:30px;
+}
+@media (min-width: 768px) {
+  .row.no-gutters {
+    margin-left: -15px; /* Uklanjamo vanjske margine za red */
+    margin-right: -15px; /* Uklanjamo vanjske margine za red */
+  }
+
+}

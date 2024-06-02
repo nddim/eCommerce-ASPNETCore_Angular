@@ -1,0 +1,74 @@
+<div class="row">
+
+  <div class="col-md-4">
+    <div class="col-md-11">
+      <div class="form-group">
+        <label for="noviBrend">Dodaj novi brend:</label>
+        <div class="input-group">
+          <input [(ngModel)]="brend.naziv" type="text" class="form-control" id="noviBrend">
+          <div class="input-group-append">
+            <button type="button" class="btn btn-primary" (click)="sendData()">Dodaj</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-11">
+      <div class="form-group">
+        <label for="pretragaBrend">Pretraga:</label>
+        <input [(ngModel)]="filterBrend.naziv" (input)="getAllBrends()" type="text" class="form-control" id="pretragaBrend">
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-5 mt-3">
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <td >Rb</td>
+        <td >Naziv</td>
+        <td >Akcije</td>
+      </tr>
+      </thead>
+
+      <tbody>
+
+    <tr *ngFor="let brend of brendoviPrikaz | paginate:{itemsPerPage: tableSize, currentPage: page,totalItems:count}; let i=index">
+      <td>{{(i+1)+(page-1)*tableSize}}.</td>
+      <td>
+        <div *ngIf="brend.isEdit">
+          <input  type="text" [(ngModel)]="brend.naziv">
+        </div>
+        <div *ngIf="!brend.isEdit">
+          {{brend.naziv}}
+        </div>
+      </td>
+      <td>
+        <div *ngIf="!brend.isEdit">
+          <button (click)="modifikujBrend(brend)" class="btn btn-info" style="margin-right: 5px"><i class="bi bi-pencil"></i>Edit</button>
+          <button (click)="izbrisiBrend(brend)" class="btn btn-danger" ><i class="bi bi-trash"></i>Delete</button>
+        </div>
+
+        <div *ngIf="brend.isEdit">
+          <button (click)="saveBrendModification(brend)" class="btn btn-info" style="margin-right: 5px"><i class="bi bi-floppy2-fill"></i>Save</button>
+          <button (click)="cancelModification(brend)" class="btn btn-danger" ><i class="bi bi-x"></i>Cancel</button>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+
+    </table>
+    <nav aria-label="Page navigation example" class="d-flex mt-3 justify-content-center">
+      <ul class="pagination">
+        <pagination-controls
+          previousLabel="Prev"
+          nextLabel="Next"
+          (pageChange)="onTableDataChange($event)"
+        >
+        </pagination-controls>
+      </ul>
+    </nav>
+  </div>
+</div>

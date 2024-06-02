@@ -1,0 +1,110 @@
+<app-navbar></app-navbar>
+<div class="container py-3">
+  <div class="row d-flex justify-content-center my-4">
+    <div style="margin-left: 5%;margin-top: 30px">
+      <div *ngIf="artikli.length>0">
+        <h2>Vaša korpa:</h2>
+        <div class="row">
+          <div class="col-lg-8">
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Proizvod</th>
+                <th scope="col">Količina</th>
+                <th scope="col">Cijena</th>
+                <th scope="col">Ukupna cijena</th>
+                <th scope="col">Ukloni</th>
+              </tr>
+              </thead>
+              <tbody >
+              <tr *ngFor="let s of artikli;let i=index">
+                <th scope="row">{{i+1}}</th>
+                <td><a style="color: black" [routerLink]="['/proizvod', s.proizvod.id]">{{s.proizvod.naziv}}</a></td>
+                <td>
+                  <input type="number" min="1" [max]="s.pocetnaKolicina" step="1"  [(ngModel)]="s.kolicina" (ngModelChange)="updateKorpa(s.proizvod.id, s.kolicina, s.pocetnaKolicina)"/>
+
+                </td>
+                <td *ngIf="s.proizvod.popust<=0">{{s.proizvod.pocetnaCijena}}KM</td>
+                <td *ngIf="s.proizvod.popust>0">
+                  <div style="text-decoration: line-through">
+                      {{s.proizvod.pocetnaCijena}}KM
+                    </div>
+                    <div style="color: red">
+                      {{s.proizvod.popust}}KM
+                    </div>
+                </td>
+                <td>{{s.cijenaKolicina}} KM</td>
+                <td>
+                  <button type="button" class="btn btn-danger" (click)="ukloniIzKorpe(s.id)">Ukloni</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <button routerLink="/" class="btn btn-primary btn-block mb-5 mt-2" style="float: left; margin-top: 1rem" type="submit">Nastavi kupovinu</button>
+          </div>
+          <div class="col-lg-3">
+            <div class="card">
+              <div class="card-header ">
+                <h5 class="mb-0">Suma</h5>
+              </div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                    Vrijednost
+                    <span> {{ukupno}} KM</span>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    Dostava
+                    <span>Besplatna - 0 KM</span>
+                  </li>
+                  <li
+                    class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                    <div>
+                      <strong>Ukupno</strong>
+                      <strong>
+                        <p class="mb-0">(s PDV-om)</p>
+                      </strong>
+                    </div>
+                    <span><strong>{{ukupno}} KM</strong></span>
+                  </li>
+                </ul>
+                <button  type="button" class="btn btn-primary" routerLink="/checkout">
+                  Izvrsi kupovinu
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="artikli.length==0">
+        <h2>Nema artikala u korpi!</h2>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--&lt;!&ndash;<script&ndash;&gt;-->
+<!--&lt;!&ndash;        src="https://code.jquery.com/jquery-3.7.1.js"&ndash;&gt;-->
+<!--&lt;!&ndash;        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="&ndash;&gt;-->
+<!--&lt;!&ndash;        crossorigin="anonymous"></script>&ndash;&gt;-->
+<!--<script type="module">-->
+<!--  import {InputSpinner} from "./src/InputSpinner.js"-->
+
+<!--  const inputSpinnerElements = document.querySelectorAll("input[type='number']")-->
+<!--  for (const inputSpinnerElement of inputSpinnerElements) {-->
+<!--    new InputSpinner(inputSpinnerElement)-->
+<!--  }-->
+<!--</script>-->
+
+<!--                  <input class="form-control" id="input-group" style="-moz-appearance: textfield;" type="number" min="0" max="100" style="width: 40px " [(ngModel)]="s.kolicina">-->
+<!--                  <div class="input-group">-->
+<!--                    <input class="form-control" id="input-group" style="-moz-appearance: textfield;"-->
+<!--                           type="number" min="0" max="100" style="width: 40px " [(ngModel)]="s.kolicina">-->
+<!--                    <div class="btn-group-vertical">-->
+<!--                      <button  class="btn border btn-sm" (click)="s.kolicina=s.kolicina+1" type="button"><i class="fa-solid fa-chevron-up"></i></button>-->
+<!--                      <button  class="btn border btn-sm" (click)="s.kolicina=s.kolicina+-1" type="button"><i class="fa-solid fa-chevron-down"></i></button>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<app-footer></app-footer>

@@ -1,0 +1,68 @@
+.korpa{
+  text-decoration: none;
+
+  color: black;
+  text-underline: none;
+
+  padding-bottom: 6px;
+  padding-right: 3px;
+  padding-left: 3px;
+}
+.korpa:hover{
+  cursor: pointer;
+  background-color: #4b4bff;
+
+}
+img, h5:hover{
+  cursor:pointer;
+
+}
+
+.col-lg-9{
+  margin-left: 12%
+}
+.korpa{
+  text-decoration: none;
+
+  color: black;
+  text-underline: none;
+}
+.korpa:hover{
+  cursor: pointer;
+  background-color: #4b4bff;
+}
+
+.naslov{
+  text-align: center;
+  /*vertical-align: middle;*/
+  /*height: 60px;*/
+  /*line-height: 60px;*/
+}
+
+.opis{
+  text-align: center;
+  max-height: 80px;
+  max-width: 100%;
+  overflow-y: auto; /* Omogućite vertikalni scrollbar */
+  padding: 5px; /* Dodajte odstupanje za bolji izgled */
+  margin-bottom: 7px;
+}
+
+.proizvod-pretraga{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px; /* Postavite visinu diva */
+}
+
+.hr-linija{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+@media only screen and (max-width: 992px) {
+  .col-lg-9{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}

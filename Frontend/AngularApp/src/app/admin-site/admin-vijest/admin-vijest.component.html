@@ -1,0 +1,114 @@
+<button class="button2fa" style="margin: 5px" (click)="dodajNova=true">Nova vijest</button>
+<br >
+<hr>
+<div class="row" style="margin: 5px">
+  <table  class="table table-bordered m-auto">
+    <thead>
+    <tr>
+      <td>Rb</td>
+      <td>Naziv</td>
+      <td>Datum</td>
+      <td>Broj pregleda</td>
+      <td>Slika</td>
+      <td>Akcija</td>
+    </tr>
+
+    </thead>
+    <tbody>
+    <tr *ngFor="let v of vijesti | paginate:{itemsPerPage: tableSize, currentPage: page,totalItems:count}; let i=index"><!--*ngFor="let s of korisnici;let i=index"-->
+      <td>{{i+1}}</td>
+      <td>{{v.naziv}}</td>
+      <td>{{v.datum|date}}</td>
+      <td>{{v.brojKlikova}}</td>
+      <td>
+        <img [ngSrc]="v.slikaUrl" height="80" width="80" alt="Nema slike">
+      </td>
+      <td>
+        <button  class="btn btn-info" style="margin-right: 5px" (click)="odaberiVijest(v.id)">Uredi</button>
+        <button  class="btn btn-danger" (click)="deleteVijest(v.id)" >Izbriši</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <nav aria-label="Page navigation example" class="d-flex mt-3 justify-content-center">
+    <ul class="pagination">
+      <pagination-controls
+        previousLabel="Prethodna"
+        nextLabel="Sljedeca"
+        (pageChange)="onTableDataChange($event)"
+      >
+      </pagination-controls>
+    </ul>
+  </nav>
+</div>
+
+<div *ngIf="dodajNova" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog" style="max-width: 800px;width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Dodaj vijest  </h5>
+        <button  type="button" class="btn-close" (click)="dodajNova=false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv</label>
+          <input  class="form-control" [(ngModel)]="novaVijest.naziv" type="text" placeholder="Naziv">
+        </div>
+        <div style="margin-bottom: 15px">
+          <label class="form-label">Tekst</label>
+
+
+          <textarea type="text" [(ngModel)]="novaVijest.tekst" rows="5"></textarea>
+        </div>
+
+
+        <div class="row">
+          <div class="mb-3 col-lg-12">
+            <!--            <label class="form-label">Slika</label>-->
+            <!--          <input class="form-control" placeholder="Opis"/>-->
+            <img *ngIf="novaSlika" [src]="novaSlika" height="180px">
+            <input id="slika-input" type="file" accept="image/*"(change)="generisiPreviewSlike()" ><!---->
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  (click)="dodajNova=false">Close</button>
+        <button type="button" class="btn btn-primary" (click)="dodajVijest()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="edit" class="modal fade show" id="exampleModalLive2" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog" style="max-width: 800px;width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel2">Azuriraj vijest  </h5>
+        <button  type="button" class="btn-close" (click)="edit=false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv</label>
+          <input  class="form-control" [(ngModel)]="odabranaVijest.naziv" type="text" placeholder="Naziv">
+        </div>
+        <div style="margin-bottom: 15px">
+          <label class="form-label">Tekst</label>
+          <textarea type="text" [(ngModel)]="odabranaVijest.tekst" rows="5"></textarea>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-lg-12">
+            <img *ngIf="editovanaSlika" [src]="editovanaSlika" height="180px">
+            <input id="slika-edit" type="file" accept="image/*"(change)="generisiPreviewSlikeEdit()" ><!---->
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  (click)="edit=false">Close</button>
+        <button type="button" class="btn btn-primary" (click)="editVijest()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

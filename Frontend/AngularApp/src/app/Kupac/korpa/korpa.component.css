@@ -1,0 +1,35 @@
+
+/*input::-webkit-outer-spin-button,*/
+/*input::-webkit-inner-spin-button {*/
+/*    !* display: none; <- Crashes Chrome on hover *!*/
+/*    -webkit-appearance: none;*/
+/*    margin: 0; !* <-- Apparently some margin are still there even though it's hidden *!*/
+/*}*/
+/*.input-group {*/
+/*    display: flex; !* Use flexbox *!*/
+/*    align-items: center; !* Center items vertically *!*/
+
+/*}*/
+
+/*!* Ensure the buttons don't wrap to a new line *!*/
+/*.btn-group-vertical {*/
+/*    flex-shrink: 0; !* Prevent shrinking *!*/
+/*    align-items: center;*/
+/*}*/
+
+/*!* Adjust margins or spacing between input and buttons as needed *!*/
+/*.form-control {*/
+/*    margin-right: 5px; !* Add spacing between input and buttons *!*/
+/*}*/
+
+td, th{
+  vertical-align: middle;
+}
+
+.plavi-snackbar{
+  --mdc-snackbar-container-color: green;
+  --mat-mdc-snack-bar-button-color: white;
+}
+.container {
+  min-height: calc(100vh - 140px); /* Adjust 56px to match the height of your navbar */
+}

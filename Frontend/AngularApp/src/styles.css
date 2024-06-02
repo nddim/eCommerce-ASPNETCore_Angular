@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'ngx-toastr/toastr';
+@import "primeng/resources/primeng.css";
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+.plavi-snackbar{
+  --mdc-snackbar-container-color: #007bff;
+  --mat-mdc-snack-bar-button-color: white;
+  --mat-snack-bar-button-color: white;
+
+
+}
+
+.zeleni-snackbar{
+  --mdc-snackbar-container-color: green;
+  --mat-mdc-snack-bar-button-color: white;
+  --mat-snack-bar-button-color: white;
+
+}
+
+.crveni-snackbar{
+  --mdc-snackbar-container-color: red;
+  --mat-mdc-snack-bar-button-color: white;
+  --mat-snack-bar-button-color: white;
+
+}
+
+.zuti-snackbar{
+  --mdc-snackbar-container-color: #d0e000;
+  --mat-mdc-snack-bar-button-color: white;
+  --mat-snack-bar-button-color: white;
+
+}

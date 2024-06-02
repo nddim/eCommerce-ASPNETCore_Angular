@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Collapsible sidebar using Bootstrap 4</title>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrapper">
+  <!-- Sidebar  -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <a routerLink="">
+        <h3>Electronic shop</h3>
+      </a>
+      <a routerLink="">
+        <strong>ES</strong>
+      </a>
+    </div>
+
+    <ul class="list-unstyled components">
+
+      <li>
+        <a routerLink="/admin-panel/brendovi">
+          <i class="fa fa-apple" aria-hidden="true"></i>
+          Brendovi
+        </a>
+        <a href="#pageSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+         <i class="fa fa-copy"></i>
+          Kategorije
+          <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </a>
+        <ul class="collapse list-unstyled" id="pageSubmenu">
+          <li>
+            <a routerLink="/admin-panel/glavne-kategorije">Glavne kategorije</a>
+          </li>
+          <li>
+            <a routerLink="/admin-panel/kategorije">Kategorije</a>
+          </li>
+          <li>
+            <a routerLink="/admin-panel/potkategorije">Potkategorije</a>
+          </li>
+        </ul>
+
+      </li>
+      <li>
+        <a routerLink="/admin-panel/narudzbe">
+          <i class="fa fa-first-order" aria-hidden="true"></i>
+          Narudzbe
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin-panel/korisnici">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          Korisnici
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin-panel/proizvodi">
+          <i class="fa fa-mobile" aria-hidden="true"></i>
+          Proizvodi
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin-panel/admin-vijesti">
+          <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+          Vijesti
+        </a>
+      </li>
+
+      <hr>
+      <li (click)="logOut()">
+        <a style="cursor: pointer">
+          <i  class="fa fa-sign-out" aria-hidden="true">     Odjavite se</i>
+        </a>
+      </li>
+    </ul>
+    </nav>
+
+  <!-- Page Content  -->
+  <div id="content">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button type="button" id="sidebarCollapse" class="btn btn-info">
+          <i class="fa fa-align-left" style="color:white;"></i>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+
+
+
+
+    <div>
+      <router-outlet>    </router-outlet>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+
+</html>

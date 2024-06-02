@@ -1,0 +1,47 @@
+.icon-hover:hover {
+  border-color: #3b71ca !important;
+  background-color: white !important;
+  color: #3b71ca !important;
+}
+
+.icon-hover:hover i {
+  color: #3b71ca !important;
+}
+
+.product-item {
+  .product-item-content {
+    border: 1px solid var(--surface-d);
+    border-radius: 3px;
+    margin: .3rem;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  padding:5px;
+
+  .product-image {
+    width: 50%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)
+  }
+}
+
+img:hover{
+  cursor:pointer;
+}
+.p-carousel .ui-carousel-item {
+  display: flex;
+  align-items: stretch; /* Rastezanje elemenata */
+}
+
+.p-carousel .ui-carousel-item .border-round {
+  flex: 1; /* Omogućavanje rastezanja elemenata */
+}
+.border-round {
+  border: 1px solid #c2c2c2;
+  border-radius: 10px;
+}
+.dodatnaSlika{
+  border:1px solid #c2c2c2;
+
+}
+
+

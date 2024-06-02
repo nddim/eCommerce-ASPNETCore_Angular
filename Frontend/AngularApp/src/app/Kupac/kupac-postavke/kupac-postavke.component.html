@@ -1,0 +1,80 @@
+<app-navbar></app-navbar>
+<div class="container col-md-6 mt-4">
+  <h3>Lične postavke:</h3>
+
+  <div>
+    <div class="form-outline mb-2">
+      <label class="form-label" for="ime">Ime</label>
+      <input
+        type="text"
+        id="ime"
+        name="ime"
+        class="form-control"
+        required
+        minlength="3"
+        [(ngModel)]="user.ime"
+        #ime="ngModel"
+      >
+      <div *ngIf="ime.invalid && (ime.dirty || ime.touched)" class="alert" >
+        <div *ngIf="ime.errors?.['required']">Ime je obavezno</div>
+        <div *ngIf="ime.errors?.['minLength']">Minimalno 3 karaktera</div>
+      </div>
+
+      <label class="form-label" for="ime">Prezime</label>
+      <input
+        type="text"
+        id="prezime"
+        name="prezime"
+        class="form-control"
+        required
+        minlength="3"
+        [(ngModel)]="user.prezime"
+        #prezime="ngModel"
+      >
+      <div *ngIf="prezime.invalid && (prezime.dirty || prezime.touched)" class="alert">
+        <div *ngIf="prezime.errors?.['required']">Prezime je obavezno</div>
+        <div *ngIf="prezime.errors?.['minLength']">Minimalno 3 karaktera</div>
+      </div>
+
+      <label class="form-label" for="ime">Adresa</label>
+      <input
+        type="text"
+        id="adresa"
+        name="adresa"
+        class="form-control"
+        maxlength="70"
+        [(ngModel)]="user.adresa"
+        #adresa="ngModel"
+      >
+      <div *ngIf="adresa.invalid && (prezime.dirty || prezime.touched)" class="alert">
+        <div *ngIf="adresa.errors?.['maxLength']">Maksimalno 70  karaktera</div>
+      </div>
+
+      <label class="form-label" for="ime">Broj telefona</label>
+      <input
+        type="text"
+        id="broj"
+        name="broj"
+        class="form-control"
+        maxlength="21"
+        [(ngModel)]="user.brojTelefona"
+        #broj="ngModel"
+      >
+      <div *ngIf="broj.invalid && (prezime.dirty || prezime.touched)" class="alert">
+        <div *ngIf="broj.errors?.['maxLength']">Maksimalno 21 karakter</div>
+      </div>
+
+      <label class="form-label" for="ime">Šalji novosti?</label>
+      <input
+        type="checkbox"
+        [(ngModel)]="user.saljiNovosti"
+        style="margin-left: 5px;"
+        >
+
+    </div>
+    <button  (click)="updateUser()"  type="button" class="btn btn-primary btn-block mb-4" >Sačuvaj</button>
+  </div>
+
+
+</div>
+<app-footer></app-footer>

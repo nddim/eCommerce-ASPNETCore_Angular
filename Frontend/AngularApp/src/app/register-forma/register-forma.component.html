@@ -1,0 +1,77 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <h3>Registracija:</h3>
+  <form [formGroup]="registerForm" (ngSubmit)="registerUser()">
+    <div class="form-outline mb-2">
+      <label class="form-label" for="ime">Ime</label>
+      <input formControlName="ime" [ngClass]="{'is-invalid':submitted && registerForm.controls['ime'].errors}"
+              type="text" id="ime" class="form-control" />
+      <div *ngIf="submitted && registerForm.controls['ime'].errors" class="text-danger">
+        <div *ngIf="submitted && registerForm.controls['ime'].errors?.['required']" class="text-danger">
+          Ime je obavezno
+        </div>
+        <div *ngIf="submitted && registerForm.controls['ime'].errors?.['minlength']" class="text-danger">
+          Ime minimalno 3 karaktera
+        </div>
+        <div *ngIf="submitted && registerForm.controls['ime'].errors?.['maxlength']" class="text-danger">
+          Ime maximalno 50 karaktera
+        </div>
+      </div>
+    </div>
+    <div class="form-outline mb-2">
+      <label class="form-label" for="prezime">Prezime</label>
+      <input formControlName="prezime" [ngClass]="{'is-invalid':submitted && registerForm.controls['prezime'].errors}"
+             type="text" id="prezime" class="form-control" />
+
+      <div *ngIf="submitted && registerForm.controls['prezime'].errors" class="text-danger">
+        <div *ngIf="submitted && registerForm.controls['prezime'].errors?.['required']" class="text-danger">
+          Prezime je obavezno
+        </div>
+        <div *ngIf="submitted && registerForm.controls['prezime'].errors?.['minlength']" class="text-danger">
+          Prezime minimalno 3 karaktera
+        </div>
+        <div *ngIf="submitted && registerForm.controls['prezime'].errors?.['maxlength']" class="text-danger">
+          Prezime maximalno 50 karaktera
+        </div>
+      </div>
+    </div>
+
+    <div class="form-outline mb-2">
+      <label class="form-label" for="email">Email adresa</label>
+      <input formControlName="email" [ngClass]="{'is-invalid':submitted && registerForm.controls['email'].errors}" type="email" id="email" class="form-control" />
+      <div *ngIf="submitted && registerForm.controls['email'].errors" class="text-danger">
+        <div *ngIf="submitted && registerForm.controls['email'].errors?.['required']" class="text-danger">
+          Email je obavezan
+        </div>
+        <div *ngIf="submitted && registerForm.controls['email'].errors?.['minlength']" class="text-danger">
+          Email minimalno 3 karaktera
+        </div>
+        <div *ngIf="submitted && registerForm.controls['email'].errors?.['maxlength']" class="text-danger">
+          Email maximalno 50 karaktera
+        </div>
+        <div *ngIf="submitted && registerForm.controls['email'].errors?.['email']" class="text-danger">
+          Primjer emaila: ime"&#64;"gmail.com
+        </div>
+      </div>
+    </div>
+
+    <!-- Password input -->
+    <div class="form-outline mb-2">
+      <label class="form-label" for="lozinka">Lozinka</label>
+      <input formControlName="lozinka" [ngClass]="{'is-invalid':submitted && registerForm.controls['lozinka'].errors}" type="password" id="lozinka" class="form-control" />
+      <div *ngIf="submitted && registerForm.controls['lozinka'].errors?.['required']" class="text-danger">
+        Lozinka je obavezna
+      </div>
+    </div>
+    <div class="form-outline mb-2">
+      <label class="form-label" for="lozinka">Potvrdi lozinku</label>
+      <input formControlName="potvrdiLozinku" [ngClass]="{'is-invalid':submitted && registerForm.controls['potvrdiLozinku'].errors}" type="password" id="potvrdiLozinku" class="form-control" />
+      <div *ngIf="submitted && registerForm.controls['potvrdiLozinku'].errors?.['required']" class="text-danger">
+        Lozinka je obavezna
+      </div>
+    </div>
+    <button  (click)="registerUserJwt()"  type="button" class="btn btn-primary btn-block mb-4" >Napravi račun</button>
+  </form>
+</div>
+
+<app-footer></app-footer>

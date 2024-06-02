@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+<!--  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-pz7+i+E3Cg3PKMI08vIitq5zmOSOfqv4oqGTsN3Wig7YE2GXjjfDCjDFp6wuGhMMn7Gj79x6XJFF8QSKlNvKfQ==" crossorigin="anonymous" />-->
+
+
+</head>
+<body>
+
+<app-navbar></app-navbar>
+
+
+
+
+<section class="mt-3">
+  <div class="container">
+    <div class="row">
+      <!-- sidebar -->
+      <div class="col-lg-3">
+        <!-- Toggle button -->
+        <button
+          class="btn btn-outline-secondary mb-3 w-100 d-lg-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span>Prikaži filtere</span>
+        </button>
+        <!-- Collapsible wrapper -->
+        <div class="collapse card d-lg-block mb-5" id="navbarSupportedContent">
+          <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  class="accordion-button text-dark bg-light"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseOne"
+                  aria-expanded="true"
+                  aria-controls="panelsStayOpen-collapseOne"
+                >
+                  Slične kategorije
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" >
+                <div class="accordion-body" >
+                  <div *ngFor="let _potkategorija of potkategorijePrikaz">
+                    <ul class="list-unstyled">
+                      <li><a [routerLink]="['/pretraga-proizvoda', _potkategorija.potkategorijaID]" class="text-dark" (click)="promijeniPotkategoriju(_potkategorija.potkategorijaID)"> {{_potkategorija.potkategorijaNaziv}} </a></li>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+<!--<router-outlet></router-outlet>-->
+
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                <button
+                  class="accordion-button text-dark bg-light"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseTwo"
+                  aria-expanded="true"
+                  aria-controls="panelsStayOpen-collapseTwo"
+                >
+                  Brendovi
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
+                <div class="accordion-body">
+                  <div *ngFor="let _brend of brendoviSidebar">
+                    <!-- Checked checkbox -->
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" [id]="'brend-checkbox-'+_brend.brendId" [checked]="_brend.isChecked" (change)="updateBrend(_brend.brendId)"    />
+                      <label class="form-check-label" [for]="'brend-checkbox-'+_brend.brendId">{{_brend.brendNaziv}}  ({{_brend.brojProizvoda}})</label>
+<!--                      <span class="badge badge-secondary float-end">120</span>-->
+                    </div>
+                    <!-- Checked checkbox -->
+
+                    <!-- Default checkbox -->
+<!--                    <div class="form-check">-->
+<!--                      <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />-->
+<!--                      <label class="form-check-label" for="flexCheckDefault">Honda</label>-->
+<!--                      <span class="badge badge-secondary float-end">30</span>-->
+<!--                    </div>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingThree">
+                <button
+                  class="accordion-button text-dark bg-light"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#panelsStayOpen-collapseThree"
+                  aria-expanded="false"
+                  aria-controls="panelsStayOpen-collapseThree"
+                >
+                  Cijena
+                </button>
+              </h2>
+              <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree">
+                <div class="accordion-body">
+<!--                  <div class="range">-->
+
+
+                  <div class="row mb-0">
+                    <div class="col-6">
+                      <p class="mb-0">
+                        Min
+                      </p>
+                      <div class="form-outline">
+                        <label class="form-label">{{minimum}}KM</label>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <p class="mb-0">
+                        Max
+                      </p>
+                      <div class="form-outline">
+                        <label class="form-label">{{maximum}}KM</label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <mat-slider min="{{minimum}}" max="{{maximum}}">
+                    <input [(ngModel)]="minZadani" [(value)]="minZadani" matSliderStartThumb (change)="promjenaCijeneMin($event)">
+                    <input [(ngModel)]="maxZadani" [(value)]="maxZadani" matSliderEndThumb (change)="promjenaCijeneMax($event)">
+                  </mat-slider>
+
+
+
+<!--                  <mat-slider min="1" max="1000">-->
+<!--                    <input value="300" matSliderStartThumb>-->
+<!--                    <input value="400" matSliderEndThumb>-->
+<!--                  </mat-slider>-->
+
+
+                  <div class="row mb-0">
+                    <div class="col-6">
+                      <div class="form-outline">
+                        <label class="form-label">{{minZadani}}KM</label>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-outline">
+                        <label class="form-label">{{maxZadani}}KM</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--                    <input type="range" class="form-range" id="customRange1" />-->
+<!--                  </div>-->
+
+<!--                  <button type="button" class="btn btn-white w-100 border border-secondary">apply</button>-->
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+
+
+        <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
+          <div class="col-lg-2 mb-3 mb-lg-0">
+            <label for="brojProizvoda" class="d-block d-lg-inline-block mb-2 mb-lg-0" >Broj proizvoda:</label>
+            <select style="margin-top: 5px" id="brojProizvoda" class="form-select" [(ngModel)]="tableSizeId" (ngModelChange)="promijeniBrojProizvoda()">
+              <option value="1">6</option>
+              <option value="2">12</option>
+              <option value="3">24</option>
+            </select>
+          </div>
+
+          <div class="ms-auto">
+            <label for="sortiranje" class="d-block d-lg-inline-block me-lg-2">Sortiraj po:</label>
+            <mat-form-field id="sortiranje" style="margin-right: 5px">
+              <mat-select [(ngModel)]="trenutnoSortiranje" (ngModelChange)="promijeniSortiranje()">
+                <mat-option *ngFor="let _sort of sortiranja" [value]="_sort.id">{{_sort.naziv}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div class="btn-group shadow-0 border" *ngIf="grid">
+              <a class="btn btn-light active" title="Grid view">
+                <img src="assets/Svgs/grid-3x2.svg">
+              </a>
+              <a class="btn btn-light" title="List view" (click)="grid=!grid;ucitajStranicu()">
+                <img src="assets/Svgs/list-task.svg">
+              </a>
+
+            </div>
+            <div class="btn-group shadow-0 border" *ngIf="!grid">
+              <a class="btn btn-light" title="Grid view" (click)="grid=!grid;ucitajStranicu()">
+                <img src="assets/Svgs/grid-3x2.svg">
+              </a>
+              <a class="btn btn-light active" title="List view">
+                <img src="assets/Svgs/list-task.svg">
+              </a>
+
+            </div>
+          </div>
+        </header>
+        <div *ngIf="page==1 && proizvodiPrikaz.length==0">
+          <p style="text-align: center;font-size: 28px">
+            Nema proizvoda
+          </p>
+        </div>
+        <div class="row align-items-start" *ngIf="grid">
+
+          <div class="col-lg-4 col-md-6 col-sm-6 d-flex" *ngFor="let _proizvod of proizvodiPrikaz | paginate:{itemsPerPage: tableSize, currentPage: page,totalItems:count}; let i = index">
+            <div class="card w-100 my-2 shadow-2-strong">
+              <img class="card-img-top" style="object-fit: contain; max-width: 100%;height: auto;"
+                   [alt]="'Slika od ' + _proizvod.naziv"height="300" width="300" [routerLink]="['/proizvod', _proizvod.id]"
+                   [lazyLoad]="_proizvod.slikaUrl"
+              />
+
+              <div class="card-body d-flex flex-column">
+                <div class="proizvod-pretraga">
+                  <h5 *ngIf="_proizvod.naziv.length<50" class="card-text mb-0 naslov" [routerLink]="['/proizvod', _proizvod.id]" >{{_proizvod.naziv}}</h5>
+                  <h6 *ngIf="_proizvod.naziv.length>=50" class="card-text mb-0 naslov" [routerLink]="['/proizvod', _proizvod.id]" >{{_proizvod.naziv.substring(0,65)}}...</h6>
+                </div>
+
+                <hr style="margin-bottom: 5px;">
+                <p class="text-muted opis"  [innerHTML]="_proizvod.opis"></p>
+                <hr style="margin-bottom: 5px;margin-top: 7px">
+                <h5 *ngIf="_proizvod.popust==0" class="card-title" style="text-align: center">{{_proizvod.pocetnaCijena}} KM</h5>
+                <div *ngIf="_proizvod.popust>0">
+                  <h4 class="card-title" style="text-align: center;color:red">{{_proizvod.popust}} KM</h4>
+                  <h5 class="card-title" style="text-align: center;text-decoration: line-through">{{_proizvod.pocetnaCijena}} KM </h5>
+                </div>
+                <hr style="margin-bottom: 5px;margin-top: 5px">
+                <a class="korpa"  (click)="dodajUKorpu(_proizvod.id, 1)">
+                  <div style="text-align: center" >
+                    <img src="/assets/Svgs/basket.svg" alt="" style="" class="me-1">
+                    <p class="card-text text-justify h5">
+                      Korpa
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="row justify-content-center mb-3" *ngIf="!grid" >
+          <div class="col-md-12 mb-2" *ngFor="let _proizvod of proizvodiPrikaz | paginate:{itemsPerPage: tableSize, currentPage: page,totalItems:count}; let i = index">
+            <div class="card shadow-0 border rounded-3">
+              <div class="card-body">
+                <div class="row g-0">
+                  <div class="col-xl-3 col-md-4 d-flex justify-content-center">
+                    <div class="bg-image hover-zoom ripple rounded ripple-surface me-md-3 mb-3 mb-md-0">
+                      <img [routerLink]="['/proizvod', _proizvod.id]" [lazyLoad]="_proizvod.slikaUrl" class="card-img-top" style="object-fit: contain; max-width: 100%; max-height: 100%;" alt="nema slike" height="200px" width="auto"/>
+                      <a href="#!">
+                        <div class="hover-overlay">
+                          <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-md-5 col-sm-7">
+                    <h5 [routerLink]="['/proizvod', _proizvod.id]">{{_proizvod.naziv}}</h5>
+                    <p *ngIf="_proizvod.opis.length>200" class="text mb-4 mb-md-0 me-1" [innerHTML]="_proizvod.opis.substring(0, 200)+'...'">
+                      ...
+                    </p>
+                    <p *ngIf="_proizvod.opis.length<=200" class="text mb-4 mb-md-0 me-1" [innerHTML]="_proizvod.opis.substring(0, 200)+'...'">
+                    </p>
+                  </div>
+                  <div class="col-xl-3 col-md-3 col-sm-5">
+                    <div class="d-flex flex-row align-items-center mb-1">
+                      <h5 *ngIf="_proizvod.popust==0" class="card-title" style="text-align: center">{{_proizvod.pocetnaCijena}} KM</h5>
+                      <div *ngIf="_proizvod.popust>0">
+                        <h5 class="card-title" style="text-align: center;color:red">{{_proizvod.popust}} KM</h5>
+                        <h5 class="card-title" style="text-align: center;text-decoration: line-through">{{_proizvod.pocetnaCijena}} KM </h5>
+                      </div>
+                    </div>
+                    <div class="mt-4">
+                      <a class="btn btn-light border px-2 pt-2 icon-hover korpa" (click)="dodajUKorpu(_proizvod.id, 1)"><img src="assets/Svgs/basket.svg"> Korpa
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr />
+
+        <!-- Pagination -->
+         <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+           <ul class="pagination">
+             <pagination-controls
+               previousLabel="Prethodna"
+               nextLabel="Sljedeća"
+               (pageChange)="onTableDataChange($event)"
+             >
+
+             </pagination-controls>
+           </ul>
+         </nav>
+        <!-- Pagination -->
+
+      </div>
+    </div>
+  </div>
+</section>
+<!-- sidebar + content -->
+
+<!-- Footer -->
+<app-footer></app-footer>
+<!-- Footer -->
+
+
+<!--<script src="myscript.js"></script>-->
+
+
+</body>
+</html>
+

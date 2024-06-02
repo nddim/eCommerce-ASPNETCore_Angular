@@ -1,0 +1,166 @@
+<button (click)="novi=true" class="btn btn-primary">Kreiraj novi račun</button>
+<hr>
+<button (click)="ucitajAdmine()" class="btn btn-primary me-2">Učitaj administratore</button>
+<button (click)="ucitajKorisnike()" class="btn btn-primary">Učitaj korisnike</button>
+
+<hr>
+<div>
+  Korisnički računi:
+</div>
+<div class="row" style="margin-top: 5px">
+  <div class="col-md-11">
+    <table  class="table table-bordered m-auto">
+      <thead>
+      <tr>
+        <td>Rb</td>
+        <td>Ime</td>
+        <td>Prezime</td>
+        <td>Email</td>
+        <td>Datum kreiranja</td>
+        <td>Broj telefona</td>
+        <td>Aktiviran?</td>
+        <td>Salji novosti?</td>
+        <td>Akcija</td>
+      </tr>
+
+      </thead>
+      <tbody>
+      <tr *ngFor="let s of korisnici;let i=index">
+        <td>{{i+1}}.</td>
+        <td>{{s.ime}}</td>
+        <td>{{s.prezime}}</td>
+        <td>{{s.email}}</td>
+        <td>{{s.datumKreiranja | date}} </td>
+        <td>{{s.brojTelefona}}</td>
+        <td>
+          <div *ngIf="s.isActivated">Da</div>
+          <div *ngIf="!s.isActivated">Ne</div>
+        </td>
+        <td>
+          <div *ngIf="s.saljiNovosti">Da</div>
+          <div *ngIf="!s.saljiNovosti">Ne</div>
+        </td>
+        <td>
+          <div >
+            <!--            <button (click)="modifikujProizvod(_proizvod)" class="btn btn-info" style="margin-right: 5px">Edit</button>-->
+            <button (click)="odaberiKorisnika(s)" class="btn btn-info" style="margin-right: 5px">Edit</button>
+            <button (click)="obrisiKorisnika(s.id)" class="btn btn-danger" >Delete</button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<div *ngIf="edit" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog" style="max-width: 800px;width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Uredi korisnika  </h5>
+        <button  type="button" class="btn-close" (click)="edit=false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Ime</label>
+            <input (keyup.enter)="onEnter($event)" class="form-control" [(ngModel)]="odabraniKorisnik.ime" placeholder="Ime"/>
+          </div>
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Prezime</label>
+            <input (keyup.enter)="onEnter($event)" class="form-control" [(ngModel)]="odabraniKorisnik.prezime" placeholder="Prezime"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Email</label>
+            <input (keyup.enter)="onEnter($event)" class="form-control" placeholder="Email" [(ngModel)]="odabraniKorisnik.email"/>
+          </div>
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Broj telefona</label>
+            <input (keyup.enter)="onEnter($event)" class="form-control" placeholder="Broj telefona" [(ngModel)]="odabraniKorisnik.brojTelefona"/>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-lg-3">
+            <label for="aktiviranedit" class="form-label">Aktiviran račun?</label>
+            <input id="aktiviranedit" style="margin-left: 5px" type="checkbox" [(ngModel)]="odabraniKorisnik.isActivated">
+          </div>
+          <div class="col-lg-3">
+            <label for="novostiedit" class="form-label">Salji novosti?</label>
+            <input id="novostiedit" style="margin-left: 5px" type="checkbox" [(ngModel)]="odabraniKorisnik.saljiNovosti">
+          </div>
+          <div class="col-lg-3">
+            <label for="2faedit" class="form-label">Is 2fa?</label>
+            <input id="2faedit" style="margin-left: 5px" type="checkbox" [(ngModel)]="odabraniKorisnik.is2fa">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  (click)="edit=false">Close</button>
+        <button type="button" class="btn btn-primary" (click)="editujKorisnika()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="novi" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog" style="max-width: 800px;width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Kreiraj novog korisnika  </h5>
+        <button  type="button" class="btn-close" (click)="novi=false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Ime</label>
+            <input class="form-control" [(ngModel)]="noviKorisnik.ime" placeholder="Ime"/>
+          </div>
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Prezime</label>
+            <input class="form-control" [(ngModel)]="noviKorisnik.prezime" placeholder="Prezime"/>
+          </div>
+        </div>
+          <div class="row">
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Email</label>
+            <input  class="form-control" placeholder="Email" [(ngModel)]="noviKorisnik.email"/>
+          </div>
+
+            <div class="col-lg-2" style="margin-top: 30px" >
+              <label for="admin" class="form-label">Admin?</label>
+              <input id="admin" style="margin-left: 5px" type="checkbox" [(ngModel)]="noviKorisnik.isAdmin">
+            </div>
+            <div class="col-lg-1" style="margin-top: 30px">ili</div>
+            <div class="col-lg-2" style="margin-top: 30px">
+              <label for="kupac" class="form-label">Kupac?</label>
+              <input id="kupac" style="margin-left: 5px" type="checkbox" [(ngModel)]="noviKorisnik.isKupac">
+            </div>
+
+        </div>
+        <div class="row">
+          <div class="col-lg-3">
+            <label for="aktiviran" class="form-label">Aktiviran račun?</label>
+            <input id="aktiviran" style="margin-left: 5px" type="checkbox" [(ngModel)]="noviKorisnik.isActivated">
+          </div>
+          <div class="col-lg-3">
+            <label for="novosti" class="form-label">Šalji novosti?</label>
+            <input id="novosti" style="margin-left: 5px" type="checkbox" [(ngModel)]="noviKorisnik.saljiNovosti">
+          </div>
+          <div class="col-lg-3">
+            <label for="2fa" class="form-label">Is 2fa?</label>
+            <input id="2fa" style="margin-left: 5px" type="checkbox" [(ngModel)]="noviKorisnik.is2fa">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  (click)="novi=false">Ugasi</button>
+        <button type="button" class="btn btn-primary" (click)="dodajKorisnika()">Dodaj korisnika</button>
+      </div>
+    </div>
+  </div>
+</div>

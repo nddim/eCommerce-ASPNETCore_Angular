@@ -1,0 +1,67 @@
+<app-navbar></app-navbar>
+<div class="container" *ngIf="!_2fa && !forgotPassword">
+  <h3>Prijava:</h3>
+  <form [formGroup]="registerForm" (ngSubmit)="signInJwt()">
+    <!-- Email input -->
+    <div class="form-outline mb-2">
+      <label class="form-label" for="form2Example1">Email adresa</label>
+      <input formControlName="email" [ngClass]="{'is-invalid':submitted && registerForm.controls['email'].errors}"
+           type="email" id="form2Example1" class="form-control" />
+      <div *ngIf="submitted && registerForm.controls['email'].errors" class="text-danger">
+        <div *ngIf="submitted && registerForm.controls['email'].errors?.['required']" class="text-danger">
+          Email je obavezan
+        </div>
+        <div *ngIf="submitted && registerForm.controls['email'].errors?.['minlength']" class="text-danger">
+          Email minimalno 3 karaktera
+        </div>
+        <div *ngIf="submitted && registerForm.controls['email'].errors?.['maxlength']" class="text-danger">
+          Email maximalno 100 karaktera
+        </div>
+      </div>
+    </div>
+    <!-- Password input -->
+    <div class="form-outline mb-2">
+      <label class="form-label" for="lozinka">Lozinka</label>
+      <input (keyup.enter)="onEnter($event)" formControlName="lozinka" [ngClass]="{'is-invalid':submitted && registerForm.controls['lozinka'].errors}"
+             type="password" id="lozinka" class="form-control" />
+      <div *ngIf="submitted && registerForm.controls['lozinka'].errors" class="text-danger">
+        <div *ngIf="submitted && registerForm.controls['lozinka'].errors?.['required']" class="text-danger">
+          Lozinka je obavezna
+        </div>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="col-sm-6"> <!-- Adjust the column size as needed -->
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="dropdownCheck">
+          <label class="form-check-label" for="dropdownCheck">
+            Zapamti me
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6"> <!-- Adjust the column size as needed -->
+        <a style="text-decoration:underline;color:blue;" (click)="forgotPassword=true">Zaboravili ste lozinku?</a>
+      </div>
+    </div>
+    <!-- Submit button -->
+    <button  (click)="signInJwt()" type="button" class="btn btn-primary btn-block mb-4" >Prijavi se</button>
+
+    <asl-google-signin-button type='standard' size='large'></asl-google-signin-button>
+    <div class="text-center mt-2" style="width: 60%;">
+      <p>Nemate račun? <a routerLink="/register" routerLinkActive="active">Registrujte se</a></p>
+    </div>
+  </form>
+</div>
+
+<div class="container2fa" *ngIf="_2fa">
+  <h3>2fa key: </h3>
+  <input #2fakey class="input2fa" type="text"  [(ngModel)]="key" [autofocus]="_2fa">
+  <button class="button2fa" (click)="unesi2fajwt()">Potvrdi</button>
+</div>
+<div class="container2fa" *ngIf="!_2fa && forgotPassword">
+  <h3>Unesite email i dobit ćete novu šifru na mail: </h3>
+  <input class="emailForgot" type="text" [(ngModel)]="emailForgot" >
+  <button class="button2fa" (click)="novaSifra()">Potvrdi</button>
+</div>
+<!--<app-footer class="futer"></app-footer>-->
+

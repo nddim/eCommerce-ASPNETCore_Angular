@@ -1,0 +1,97 @@
+<app-navbar></app-navbar>
+<!-- content -->
+<section class="py-5">
+  <div class="container" >
+    <div class="row gx-5">
+      <aside class="col-lg-6">
+        <div class="border-0  mb-3 d-flex justify-content-center">
+          <a data-fslightbox="mygalley" class="rounded-4" target="_blank" data-type="image" >
+             <img class="odabraniProizvod" src="{{odabranaSlika}}" [alt]="'Slika od ' + proizvod.naziv"
+                 style="margin: auto; border: 1px solid #c2c2c2;width:450px;max-width:95%;aspect-ratio:1/1;"
+                  class="rounded-2 fit"  />
+          </a>
+        </div>
+        <div class="row" *ngIf="dodatneSlike.length>1">
+          <p-carousel [value]="dodatneSlike" [numVisible]="3" [showIndicators]="false" [numScroll]="1" [circular]="true" [responsiveOptions]="responsiveOptionsSlike">
+            <ng-template let-product pTemplate="item">
+              <div class="border-1 surface-border border-round m-2 text-center">
+                <div class="mb-3">
+                  <img (click)="odaberiSliku(product)" src="{{ product}}" width="100" height="100" alt="Slika" class="w-6 shadow-2" />
+                </div>
+              </div>
+            </ng-template>
+          </p-carousel>
+        </div>
+      </aside>
+      <main class="col-lg-6">
+        <div class="ps-lg-3">
+          <h4 class="title text-dark">
+            {{proizvod.naziv}}
+          </h4>
+          <div class="d-flex flex-row mt-3">
+            <div class="text-warning mb-1 me-2"> <!-- rating -->
+              <igc-rating disabled value="{{ratingValueAvg}}" ></igc-rating>
+              <span class="ms-1" style="color:#000000">
+                {{ratingValueAvg}}
+              </span>
+            </div>
+          </div>
+          <div class="mb-2">
+            <span class="text-muted"><i class="fas fa-shopping-basket fa-sm mx-1"></i></span>
+            <span class="ms-2 {{ proizvod.pocetnaKolicina > 0 ? 'text-success' : 'text-danger' }}">{{ proizvod.pocetnaKolicina > 0 ? 'In Stock' : 'Out of Stock' }}</span>
+          </div>
+          <div class="mb-3">
+            <h5 *ngIf="proizvod.popust==0" class="card-title" >{{proizvod.pocetnaCijena}} KM</h5>
+            <h5 *ngIf="proizvod.popust>0" class="card-title" style="text-decoration: line-through">{{proizvod.pocetnaCijena}} KM</h5>
+            <h5 *ngIf="proizvod.popust>0" class="card-title" style="color:red">{{proizvod.popust}} KM</h5>
+          </div>
+          <div [innerHTML]="proizvod.opis">
+          </div>
+          <div class="row">
+            <dt class="col-md-4">Brend:</dt>
+            <dd class="col-md-5">{{proizvod.brendNaziv}}</dd>
+            <dt class="col-md-4">Potkategorija:</dt>
+            <a class="col-md-5" [routerLink]="['/pretraga-proizvoda', proizvod.potkategorijaID]">{{proizvod.potkategorijaNaziv}}</a>
+          </div>
+          <hr />
+          <a style="cursor: pointer" (click)="dodajUKorpu(proizvod.id, 1)" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Dodaj u korpu </a>
+        </div>
+      </main>
+    </div>
+  </div>
+</section>
+
+<div class="card" style="width:90%;margin-left:5%">
+  <p-carousel [value]="slicniProizvodi" [numVisible]="3" [numScroll]="3" [circular]="true" [responsiveOptions]="responsiveOptions">
+    <ng-template pTemplate="header" >
+      <h3 style="margin-left: 10px;margin-top: 10px">Povezani proizvodi:</h3>
+    </ng-template>
+    <ng-template let-product pTemplate="item">
+      <div class="border-1 surface-border border-round m-2 text-center" style="border:1px solid #c2c2c2;border-radius: 10px">
+        <div class="mb-3">
+          <img ngSrc="{{product.slikaUrl}}" class="w-6 shadow-2" style="object-fit: contain; max-width: 100%;height: auto;"
+               [alt]="'Slika od ' + product.naziv"height="300" width="300" [routerLink]="['/proizvod', product.id]"  [queryParamsHandling]="'preserve'" routerLinkActive="active"
+               priority=""
+          />
+        </div>
+        <div>
+          <h4 class="mb-1">{{ product.naziv }}</h4>
+          <hr>
+          <h5 *ngIf="product.popust==0" class="card-title" style="text-align: center">{{product.pocetnaCijena}} KM</h5>
+           <div *ngIf="product.popust>0">
+            <h4 class="card-title" style="text-align: center;color:red">{{product.popust}} KM</h4>
+            <h5 class="card-title" style="text-align: center;text-decoration: line-through">{{product.pocetnaCijena}} KM </h5>
+          </div>
+          <div class="mt-5 flex align-items-center justify-content-center gap-2">
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>
+<app-footer></app-footer>
+
+<!-- MDB -->
+<script type="text/javascript" src="js/mdb.min.js"></script>
+<!-- Custom scripts -->
+<script type="text/javascript" src="js/script.js"></script>

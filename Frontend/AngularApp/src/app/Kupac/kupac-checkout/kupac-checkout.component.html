@@ -1,0 +1,315 @@
+<app-navbar></app-navbar>
+<script src="https://polyfill.io/v3/polyfill.min.js"></script>
+
+
+<div class="container">
+    <br>
+
+    <div class="row">
+<!--        mb-4-->
+        <div class="col-md-6 order-md-1">
+            <div class="card" style="padding:1rem">
+                <h4 class="mb-1">Kontakt informacije</h4>
+                <button style="width:30%" class="btn btn-primary" (click)="popuniVrijednosti()">Popuni automatski</button>
+              <hr *ngIf="!prikaziRacun">
+              <div id="adresaDostave" *ngIf="prikaziRacun">
+                <hr>
+                <span>Adresa dostave</span>
+                <hr>
+              </div>
+               <!-- <div class="col-md-5 mb-3" >
+                  <label >Koristi adresu</label>
+                  <select class="custom-select d-block w-100" (click)="onAddressOptionChange()" [(ngModel)]="selectedAddressOption">
+                    <option disabled selected [ngValue]="null"> Odaberi adresu</option>
+                    <option value="stara">Moja adresa</option>
+                    <option value="nova">Nova adresa</option>
+                  </select>
+                </div>-->
+<!--                <form class="needs-validation" >-->
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label >Ime</label>
+
+                      <input
+                        type="text"
+                        id="ime"
+                        name="ime"
+                        class="form-control"
+                        required
+                        minlength="2"
+                        [(ngModel)]="imeInput"
+                        #ime="ngModel"
+                      >
+                      <div *ngIf="ime.invalid && (ime.dirty || ime.touched)" class="alert" >
+                        <div *ngIf="ime.errors?.['required']">Ime je obavezno</div>
+                        <div *ngIf="ime.errors?.['minLength']">Minimalno 3 karaktera</div>
+                      </div>
+
+<!--                      <input [value]="kupac.ime"  type="text" class="form-control" id="ime" [(ngModel)]="imeInput"  >-->
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label >Prezime</label>
+                      <input
+                        type="text"
+                        id="prezime"
+                        name="prezo,e"
+                        class="form-control"
+                        required
+                        minlength="2"
+                        [(ngModel)]="prezimeInput"
+                        #prezime="ngModel"
+                      >
+                      <div *ngIf="prezime.invalid && (prezime.dirty || prezime.touched)" class="alert" >
+                        <div *ngIf="prezime.errors?.['required']">Prezime je obavezno</div>
+                        <div *ngIf="prezime.errors?.['minLength']">Minimalno 3 karaktera</div>
+                      </div>
+
+<!--                      <input [value]="kupac.prezime" type="text" class="form-control" id="prezime" [(ngModel)]="prezimeInput"  >-->
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label >Email</label>
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      class="form-control"
+                      required
+                      minlength="2"
+                      [(ngModel)]="emailInput"
+                      #email="ngModel"
+                    >
+                    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert" >
+                      <div *ngIf="email.errors?.['required']">Email je obavezan</div>
+                      <div *ngIf="email.errors?.['minLength']">Minimalno 3 karaktera</div>
+                    </div>
+
+<!--                    <input [value]="kupac.email" type="email" class="form-control" id="email" [(ngModel)]="emailInput" >-->
+                  </div>
+
+
+                  <div class="mb-3">
+                    <label >Grad</label>
+                    <input
+                      type="text"
+                      id="grad"
+                      name="grad"
+                      class="form-control"
+                      required
+                      minlength="2"
+                      [(ngModel)]="gradInput"
+                      #grad="ngModel"
+                    >
+                    <div *ngIf="grad.invalid && (grad.dirty || grad.touched)" class="alert" >
+                      <div *ngIf="grad.errors?.['required']">Grad je obavezan</div>
+                      <div *ngIf="grad.errors?.['minLength']">Minimalno 3 karaktera</div>
+                    </div>
+
+<!--                    <input type="text" class="form-control" id="grad" [(ngModel)]="gradInput" >-->
+                  </div>
+
+                  <div class="mb-3">
+                    <label >Postanski broj</label>
+                    <input
+                      type="text"
+                      id="postanski"
+                      name="postanski"
+                      class="form-control"
+                      required
+                      minlength="4"
+                      [(ngModel)]="postanskiBrojInput"
+                      #postanski="ngModel"
+                    >
+                    <div *ngIf="postanski.invalid && (postanski.dirty || postanski.touched)" class="alert" >
+                      <div *ngIf="postanski.errors?.['required']">Postanski broj je obavezan</div>
+                      <div *ngIf="postanski.errors?.['minLength']">Minimalno 4 karaktera</div>
+                    </div>
+
+<!--                    <input type="text" class="form-control" id="zip" [(ngModel)]="postanskiBrojInput" >-->
+                  </div>
+
+                  <div class="mb-3">
+                    <label >Kontakt broj</label>
+                    <input
+                      type="text"
+                      id="kontakt"
+                      name="kontakt"
+                      class="form-control"
+                      required
+                      minlength="7"
+                      [(ngModel)]="kontaktBrojInput"
+                      #kontakt="ngModel"
+                    >
+                    <div *ngIf="kontakt.invalid && (kontakt.dirty || kontakt.touched)" class="alert" >
+                      <div *ngIf="kontakt.errors?.['required']">Kontakt broj je obavezan</div>
+                      <div *ngIf="kontakt.errors?.['minLength']">Minimalno 4 karaktera</div>
+                    </div>
+<!--                    <input [value]="kupac.kontaktBroj" type="text" class="form-control" id="broj" [(ngModel)]="kontaktBrojInput" >-->
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-5 mb-3">
+                      <label >Država</label>
+                      <select [(ngModel)]="drzavaInput" class="custom-select d-block w-100" >
+                        <option disabled selected>Izaberi opciju</option>
+                        <option>Bosna i Hercegovina</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-7 mb-3">
+                      <label >Adresa</label>
+                      <input [disabled]="otvoriMape" [value]="kupac.adresa" type="text" class="form-control" id="adresa" [(ngModel)]="adresaInput" >
+                    </div>
+                    <div class="col-md-5">
+                      <button *ngIf="!otvoriMape" class="btn btn-primary btn-md btn-block mb-2 mt-4 " style="float:right" (click)="otvoriMape=true" >Otvori Maps</button>
+                      <button *ngIf="otvoriMape" class="btn btn-primary btn-md btn-block mb-2 mt-4 " style="float:right" (click)="otvoriMape=false" >Zatvori Maps</button>
+                    </div>
+                  </div>
+
+
+                  <!--<div class="col-md-12 " *ngIf="otvoriMape">
+
+                    <google-map
+                    [center]="center"
+                    [zoom]="zoom"
+                    (mapClick)="addMarker($event)">
+                      @for (position of markerPositions; track position)
+                      {
+                        <map-marker [position]="position" [options]="markerOptions" />
+                      }
+                    </google-map>
+                  </div>-->
+              <div class="col-md-12" *ngIf="otvoriMape">
+                <div class="map-container">
+                  <google-map
+                    [center]="center"
+                    [zoom]="zoom"
+                    (mapClick)="addMarker($event)">
+                    @for (position of markerPositions; track position)
+                    {
+                      <map-marker [position]="position" [options]="markerOptions" />
+                    }
+                  </google-map>
+                </div>
+              </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-6 order-md-2" >
+            <div class="card" style="padding:1rem">
+                <h4 class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="">Vaša korpa</span>
+                </h4>
+                <div *ngIf="artikli.length>0">
+                  <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed" *ngFor="let s of artikli" >
+                      <div>
+                        <h6 class="my-0">{{s.proizvod.naziv}}</h6>
+                        <small class="text-muted"> Broj artikala: {{s.kolicina}}</small>
+                      </div>
+                      <span>{{s.cijenaKolicina}} KM</span>
+                    </li>
+                  </ul>
+                </div>
+              <br>
+              <div class="card" >
+                <div class="card-body">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                      Suma stavki
+                      <span> {{ukupno}} KM</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                      Dostava - Brza najbrža pošta
+                      <span>Besplatna - 0 KM</span>
+                    </li>
+                    <li
+                      class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                      <div>
+                        <strong>Ukupno</strong>
+                        <strong>
+                          <p class="mb-0">(s PDV-om)</p>
+                        </strong>
+                      </div>
+                      <span><strong>{{ukupno}} KM</strong></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="card" style="margin-top: 1rem">
+                <div class="card" style="padding:1rem">
+                    <h4 class="mb-3">Plaćanje</h4>
+                    <div class="d-block my-3">
+                        <div class="custom-control custom-radio">
+                            <input  id="debit" name="paymentMethod" checked="true" type="radio" class="custom-control-input" style="margin-right: 1rem">
+                            <label class="custom-control-label" for="debit"> Plaćanje po dostavi</label>
+                        </div>
+<!--                        <div class="custom-control custom-radio">-->
+<!--                            <input [(ngModel)]="prikaziKarticnoPlacanje" id="paypal" name="paymentMethod" type="radio" style="margin-right: 1rem" >-->
+<!--                            <label class="custom-control-label" for="paypal"> Kartično plaćanje</label>-->
+<!--                        </div>-->
+                    </div>
+<!--                    <div id="kartica" *ngIf="prikaziKarticnoPlacanje">-->
+<!--                      <div class="row">-->
+<!--                        <div class="col-md-6 mb-3">-->
+<!--                          <label for="cc-name">Name on card</label>-->
+<!--                          <input type="text" class="form-control" id="cc-name" placeholder="" required>-->
+<!--                          <small class="text-muted">Full name as displayed on card</small>-->
+<!--                          <div class="invalid-feedback">-->
+<!--                            Name on card is required-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-6 mb-3">-->
+<!--                          <label for="cc-number">Credit card number</label>-->
+<!--                          <input type="text" class="form-control" id="cc-number" placeholder="" required>-->
+<!--                          <div class="invalid-feedback">-->
+<!--                            Credit card number is required-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      <div class="row">-->
+<!--                        <div class="col-md-3 mb-3">-->
+<!--                          <label for="cc-expiration">Expiration</label>-->
+<!--                          <input type="text" class="form-control" id="cc-expiration" placeholder="" required>-->
+<!--                          <div class="invalid-feedback">-->
+<!--                            Expiration date required-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-3 mb-3">-->
+<!--                          <label for="cc-cvv">CVV</label>-->
+<!--                          <input type="text" class="form-control" id="cc-cvv" placeholder="" required>-->
+<!--                          <div class="invalid-feedback">-->
+<!--                            Security code required-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+                </div>
+            </div>
+          <div class="card" style="padding:1rem; margin-top:1rem">
+            <h4 class="d-flex justify-content-between align-items-center mb-1">
+              <span class="">Komentar</span>
+            </h4>
+            <hr>
+            <div class="mt-2">
+              <label >Želite li dodati poruku ili komentar u vezi Vaše narudžbe?</label>
+              <textarea [(ngModel)]="komentarInput" class="w-100 mt-2" id="" cols="100" rows="4"></textarea>
+            </div>
+          </div>
+          <button (click)="dodajNarudzbu()" class="btn btn-primary btn-lg btn-block mb-5 mt-2" style="float: right; margin-top: 1rem" type="submit">Zaključi narudžbu</button>
+        </div>
+
+
+
+    </div>
+
+</div>
+<script src="kupac-checkout.js"></script>
+
+<app-footer></app-footer>

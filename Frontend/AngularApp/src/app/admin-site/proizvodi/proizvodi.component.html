@@ -1,0 +1,300 @@
+
+
+<div style="margin-left: 5px">
+
+  <div style="margin-left: 5px">
+    <div class="col-md-4" style="margin-bottom: 10px;">
+      <label>Filtriraj po glavnoj kategoriji:</label>
+      <br>
+      <select [(ngModel)]="glavnaKategorijaFilter.id" (ngModelChange)="promijeniGlavnuKategoriju(glavnaKategorijaFilter.id)" class="form-control" style="width: 100%;">
+        <option [value]="">Sve glavne kategorije</option>
+        <option *ngFor="let option of glavneKategorije" [value]="option.id">{{option.naziv}}</option>
+      </select>
+    </div>
+    <div class="col-md-4" style="margin-bottom: 10px;">
+      <label>Filtriraj po kategoriji:</label>
+      <br>
+      <select [(ngModel)]="kategorijaFilter.id" (ngModelChange)="promijeniKategoriju(kategorijaFilter.id)" class="form-control" style="width: 100%;">
+        <option [value]="">Sve kategorije</option>
+        <option *ngFor="let option of kategorije" [value]="option.id">{{option.naziv}}</option>
+      </select>
+    </div>
+    <div class="col-md-4" style="margin-bottom: 10px;">
+      <label>Filtriraj po potkategoriji:</label>
+      <br>
+      <select [(ngModel)]="potkategorijaFilterPretraga.id" (ngModelChange)="promijeniPotkategoriju(potkategorijaFilterPretraga.id)" class="form-control" style="width: 100%;">
+        <option [value]="">Sve potkategorije</option>
+        <option *ngFor="let option of potkategorijeFilter" [value]="option.id">{{option.naziv}}</option>
+      </select>
+      <br>
+      <button (click)="resetFiltere()" class="btn btn-primary mt-2">Resetuj filtere</button>
+      <button (click)="dodajNovi=true" class="btn btn-success mt-2" style="margin-left:5px;">Novi proizvod</button>
+
+    </div>
+    <br>
+    <hr>
+  </div>
+  <div class="col-md-5" #pretragaScroll>
+    <div class="">
+      <label for="pretraga" style="margin-right: 5px;">Pretraži po nazivu:</label>
+      <input type="text" id="pretraga" class="form-control mr-2" placeholder="Naziv proizvoda" [(ngModel)]="naziv" (ngModelChange)="getAllProizvodi(); page=1">
+      <div style="margin-right: 5px;margin-left:5px;padding-top:5px;padding-bottom:5px">
+        <label for="prikaziSliku" >Prikaži sliku?</label>
+        <input type="checkbox" name="Prikaži sliku" id="prikaziSliku" style="padding-top:5px;" [checked]="prikaziSliku" (click)="togglePrikaziSliku()" class="form-check-input">
+      </div>
+    </div>
+  </div>
+  <div>
+    <label for="sortiranje" class="d-block d-lg-inline-block me-lg-2">Sortiraj po:</label>
+    <mat-form-field id="sortiranje" style="margin-right: 5px">
+      <mat-select [(ngModel)]="trenutnoSortiranje" (ngModelChange)="promijeniSortiranje()">
+        <mat-option *ngFor="let _sort of sortiranja" [value]="_sort.id">{{_sort.naziv}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="row" style="margin-top: 50px;margin: 5px; box-sizing: border-box">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Rb</th>
+          <th scope="col" style="width: 200px">Naziv</th>
+          <th scope="col">Kolicina</th>
+          <th scope="col">Cijena</th>
+          <th scope="col">Popust</th>
+          <th scope="col">Potkategorija</th>
+          <th scope="col">Brend</th>
+          <th *ngIf="prikaziSliku" scope="col">Slika</th>
+          <th scope="col">Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let _proizvod of proizvodiPrikaz| paginate:{itemsPerPage: tableSize, currentPage: page,totalItems:count}; let i=index">
+          <td>{{(i+1)+(page-1)*tableSize}}</td>
+          <td>{{_proizvod.naziv}}</td>
+          <td>{{_proizvod.pocetnaKolicina}}</td>
+          <td>{{_proizvod.pocetnaCijena}}</td>
+          <td *ngIf="_proizvod.popust > 0">{{_proizvod.popust}}</td>
+          <td *ngIf="_proizvod.popust <= 0">Bez popusta</td>
+          <td>{{_proizvod.potkategorijaNaziv}}</td>
+          <td>{{_proizvod.brendNaziv}}</td>
+          <td *ngIf="prikaziSliku">
+            <img [src]="_proizvod.slikaUrl" height="80" width="80" alt="Nema slike">
+          </td>
+          <td>
+            <div *ngIf="!_proizvod.isEdit">
+              <button (click)="odaberiProizvod(_proizvod.id)" class="btn btn-info me-1 mb-1">Uredi</button>
+              <button (click)="odaberiProizvodGraf(_proizvod.id)" class="btn btn-secondary me-1 mb-1">Graf</button>
+              <button (click)="deleteProizvod(_proizvod)" class="btn btn-danger">Izbriši</button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+</div>
+
+<nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+  <ul class="pagination">
+    <pagination-controls
+      previousLabel="Prev"
+      nextLabel="Next"
+      (pageChange)="onTableDataChange($event);scroll(pretragaScroll)"
+    >
+
+    </pagination-controls>
+  </ul>
+</nav>
+
+
+<div *ngIf="edit" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog" style="max-width: 800px;width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Uredi proizvod  </h5>
+        <button  type="button" class="btn-close" (click)="edit=false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv</label>
+          <input  class="form-control" [(ngModel)]="odabraniProizvod.naziv" type="text" placeholder="Naziv">
+        </div>
+        <div class="row">
+          <div class="mb-3 col-lg-4">
+            <label class="form-label">Kolicina</label>
+            <input class="form-control" [(ngModel)]="odabraniProizvod.pocetnaKolicina" placeholder="Kolicina"/>
+          </div>
+          <div class="mb-3 col-lg-4">
+            <label class="form-label">Cijena</label>
+            <input class="form-control" [(ngModel)]="odabraniProizvod.pocetnaCijena" placeholder="Kolicina"/>
+          </div>
+          <div class="mb-3 col-lg-4">
+            <label class="form-label">Akcijska cijena (0 defaultno)</label>
+            <input class="form-control" placeholder="Popust" [(ngModel)]="odabraniProizvod.popust"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Potkategorija</label>
+            <select class="form-control" [(ngModel)]="odabraniProizvod.potkategorijaID">
+              <option *ngFor="let p of potkategorije" [value]="p.id">{{p.naziv}}</option>
+            </select>
+          </div>
+
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Brend</label>
+            <select class="form-control" [(ngModel)]="odabraniProizvod.brendID"  >
+              <option *ngFor="let b of brendovi" [value]="b.id">{{b.naziv}}</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom: 15px">
+          <label class="form-label">Opis</label>
+          <textarea type="text" [(ngModel)]="odabraniProizvod.opis" rows="5"></textarea>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-lg-8">
+            <img [src]="editovanaSlika"  height="180px" alt="Nema slike">
+<!--            <input id="slika-edit" type="file" accept="image/*" (change)="generisiPreviewSlikeEdit()">-->
+              <input class="custom-file-input" id="slika-edit" type="file" accept="image/*" (change)="generisiPreviewSlikeEdit()">
+          </div>
+        </div>
+        <div class="row">
+          <h4>Dodatne slike:</h4>
+          <div class="col-lg-6">
+            <img *ngIf="novaSlikaUrediGalerija" [src]="novaSlikaUrediGalerija" width="125" height="125px"  alt="greska">
+            <input class="custom-file-input" id="uredi-galerija-input" type="file" accept="image/*" (change)="generisiPreviewSlikeGalerijaUredi()">
+          </div>
+          <br>
+          <div class="row mb-2 mt-2">
+            <div *ngFor="let s of odabraniProizvod.slikeGalerija" class="col-lg-3">
+              <img src="{{s.slikaUrl}}" alt="greska" height="125" width="125">
+              <button class="btn btn-danger align-items-center" style="margin:7px" (click)="obrisiSliku(s.id)">Izbriši sliku</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  (click)="edit=false">Close</button>
+        <button type="button" class="btn btn-primary" (click)="editujProizvod()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="dodajNovi" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog" style="max-width: 800px;width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Dodaj proizvod  </h5>
+        <button  type="button" class="btn-close" (click)="dodajNovi=false" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Naziv</label>
+          <input  class="form-control" [(ngModel)]="noviProizvod.naziv" type="text" placeholder="Naziv">
+        </div>
+        <div class="row">
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Kolicina</label>
+            <input class="form-control" [(ngModel)]="noviProizvod.pocetnaKolicina" placeholder="Kolicina"/>
+          </div>
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Cijena</label>
+            <input class="form-control" [(ngModel)]="noviProizvod.pocetnaCijena" placeholder="Kolicina"/>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Potkategorija</label>
+            <select class="form-control" [(ngModel)]="noviProizvod.potkategorijaID">
+              <option *ngFor="let p of potkategorije" [value]="p.id">{{p.naziv}}</option>
+            </select>
+          </div>
+
+          <div class="mb-3 col-lg-6">
+            <label class="form-label">Brend</label>
+            <select class="form-control" [(ngModel)]="noviProizvod.brendID"  >
+              <option *ngFor="let b of brendovi" [value]="b.id">{{b.naziv}}</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-bottom: 15px">
+          <label class="form-label">Opis</label>
+
+           <textarea type="text" [(ngModel)]="noviProizvod.opis" rows="5"></textarea>
+
+        </div>
+        <div class="row">
+          <div class="mb-3 col-lg-4">
+            <label class="form-label">Popust</label>
+            <input class="form-control" placeholder="Popust" [(ngModel)]="noviProizvod.popust"/>
+          </div>
+          <div class="mb-3 col-lg-8">
+            <!--            <label class="form-label">Slika</label>-->
+            <!--          <input class="form-control" placeholder="Opis"/>-->
+            <img *ngIf="novaSlika" [src]="novaSlika" height="125px">
+              <input style="margin-top: 30px;" class="custom-file-input" id="slika-input" type="file" accept="image/*" (change)="generisiPreviewSlike()">
+          </div>
+        </div>
+        <div class="row">
+          <h4>Dodajte dodatne slike:</h4>
+          <div class="col-lg-6">
+            <img *ngIf="novaSlikaGalerija" [src]="novaSlikaGalerija" width="125" height="125px"  alt="greska">
+            <input class="custom-file-input" id="galerija-input" type="file" accept="image/*" (change)="generisiPreviewSlikeGalerija()">
+          </div>
+          <br>
+          <div class="row mb-2 mt-2">
+            <div *ngFor="let s of slikeGalerija" class="col-lg-3">
+              <img src="{{s}}" alt="greska" height="125" width="125">
+              <button class="btn btn-danger align-items-center" style="margin:7px" (click)="ukloniSliku(s)">Ukloni sliku</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  (click)="dodajNovi=false">Close</button>
+        <button type="button" class="btn btn-primary" (click)="dodajProizvod()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="graf" class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel" aria-modal="true" role="dialog" style="display: block;">
+  <div class="modal-dialog" style="max-width: 800px;width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Analitika pregleda proizvoda</h5>
+        <button  type="button" class="btn-close" (click)="graf=false;datumId=1" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Period:</label>
+          <select [(ngModel)]="datumId" style="margin-left:7px" (ngModelChange)="promijeniPeriod()">
+            <option *ngFor="let d of dani" [ngValue]="d.id">{{d.naziv}}</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="chart">
+            <canvas id="vrijeme"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  (click)="graf=false;datumId=1">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

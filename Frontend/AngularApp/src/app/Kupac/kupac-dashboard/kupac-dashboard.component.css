@@ -1,0 +1,26 @@
+.card-link {
+  cursor: pointer; /* Change cursor to pointer when hovering over the card */
+}
+a {
+  color: black; /* Set the color to black */
+  text-decoration: none; /* Remove underline effect */
+}
+h5:hover {
+  color:#2874f0;
+}
+.card-link:hover .card-title {
+  color: #2874f0;
+}
+.container {
+  min-height: calc(100vh - 130px); /* Adjust 100px to match the height of your navbar */
+}
+
+.card {
+  height: 100%; /* Ensure cards fill the height of their parent */
+}
+
+app-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
